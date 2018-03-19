@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<info>
+	<id>groupquota</id>
+	<name>Group quota</name>
+	<summary>Give filesystem quotas to groups</summary>
+	<description><![CDATA[Give filesystem quotas to groups.]]></description>
+	<licence>AGPL</licence>
+	<author>Robin Appelman</author>
+	<version>0.1.0</version>
+	<types>
+		<filesystem/>
+	</types>
+	<namespace>GroupQuota</namespace>
+
+	<website>https://github.com/nextcloud/groupquota</website>
+	<bugs>https://github.com/nextcloud/groupquota/issues</bugs>
+	<repository type="git">https://github.com/nextcloud/groupquota.git</repository>
+
+	<category>files</category>
+
+	<dependencies>
+		<nextcloud min-version="12" max-version="14"/>
+	</dependencies>
+</info>
