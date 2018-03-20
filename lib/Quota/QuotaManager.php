@@ -40,16 +40,18 @@ class QuotaManager {
 	}
 
 	/**
-	 * @param IGroup $group
+	 * @param string $groupId
 	 * @return int
 	 */
-	public function getGroupQuota(IGroup $group) {
-		return $this->config->getAppValue('groupquota', 'quota_' . $group->getGID(), FileInfo::SPACE_UNLIMITED) + 0;
+	public function getGroupQuota($groupId) {
+		return $this->config->getAppValue('groupquota', 'quota_' . $groupId, FileInfo::SPACE_UNLIMITED) + 0;
 	}
 
 	public function getUserQuota(IUser $user) {
 		$groups = $this->groupManager->getUserGroups($user);
-		$groupQuotas = array_map([$this, 'getGroupQuota'], $groups);
+		$groupQuotas = array_map(function(IGroup $group) {
+			return $this->getGroupQuota($group->getGID());
+		}, $groups);
 		foreach ($groupQuotas as $group => $quota) {
 			if ($quota >= 0) {
 				return [$group, $quota];
@@ -59,10 +61,10 @@ class QuotaManager {
 	}
 
 	/**
-	 * @param IGroup $group
+	 * @param string $groupId
 	 * @param int $quota
 	 */
-	public function setGroupQuota(IGroup $group, $quota) {
-		$this->config->setAppValue('groupquota', 'quota_' . $group->getGID(), $quota);
+	public function setGroupQuota($groupId, $quota) {
+		$this->config->setAppValue('groupquota', 'quota_' . $groupId, $quota);
 	}
 }
