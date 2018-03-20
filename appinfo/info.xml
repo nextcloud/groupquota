@@ -3,7 +3,9 @@
 	<id>groupquota</id>
 	<name>Group quota</name>
 	<summary>Give filesystem quotas to groups</summary>
-	<description><![CDATA[Give filesystem quotas to groups.]]></description>
+	<description><![CDATA[Allow setting a disk quota for an entire group.
+
+Note: configuring quota is only possible trough the API, no admin interface is currently available.]]></description>
 	<licence>AGPL</licence>
 	<author>Robin Appelman</author>
 	<version>0.1.0</version>
