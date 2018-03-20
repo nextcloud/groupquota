@@ -23,8 +23,10 @@ namespace OCA\GroupQuota\AppInfo;
 
 use OCA\GroupQuota\Quota\UsedSpaceCalculator;
 use OCA\GroupQuota\Quota\QuotaManager;
-use OCA\GroupQuota\Wrapper\GroupUsedSpaceWrapper;
+use OCA\GroupQuota\Wrapper\GroupQuotaWrapper;
 use OCP\AppFramework\App;
+use OCP\Files\IHomeStorage;
+use OCP\Files\Storage\IStorage;
 use OCP\Util;
 
 class Application extends App {
@@ -51,26 +53,17 @@ class Application extends App {
 	}
 
 	public function addStorageWrapper() {
-		\OC\Files\Filesystem::addStorageWrapper('groupquota', function ($mountPoint, $storage) {
-			/**
-			 * @var \OC\Files\Storage\Storage $storage
-			 */
-			if ($storage->instanceOfStorage('\OC\Files\Storage\Home')
-				|| $storage->instanceOfStorage('\OC\Files\ObjectStore\HomeObjectStoreStorage')
-			) {
+		\OC\Files\Filesystem::addStorageWrapper('groupquota', function ($mountPoint, IStorage $storage) {
+			if ($storage->instanceOfStorage(IHomeStorage::class)) {
 				/** @var \OC\Files\Storage\Home $storage */
 				if (is_object($storage->getUser())) {
 					$user = $storage->getUser();
 					list($groupId, $quota) = $this->getQuotaManager()->getUserQuota($user);
 					if ($quota !== \OCP\Files\FileInfo::SPACE_UNLIMITED) {
 						$group = $this->getContainer()->getServer()->getGroupManager()->get($groupId);
-						$userSpaceWrapper = new GroupUsedSpaceWrapper([
+						return new GroupQuotaWrapper([
 							'storage' => $storage,
 							'root_size' => $this->getUsedSpaceCalculator()->getUsedSpaceByGroup($group),
-							'root' => 'files'
-						]);
-						return new \OC\Files\Storage\Wrapper\Quota([
-							'storage' => $userSpaceWrapper,
 							'quota' => $quota,
 							'root' => 'files'
 						]);

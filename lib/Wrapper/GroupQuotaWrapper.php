@@ -21,23 +21,19 @@
 
 namespace OCA\GroupQuota\Wrapper;
 
-use OC\Files\Storage\Wrapper\Wrapper;
+use OC\Files\Storage\Wrapper\Quota;
 
-class GroupUsedSpaceWrapper extends Wrapper {
-	/** @var string */
-	private $root;
-
+class GroupQuotaWrapper extends Quota {
 	/** @var int */
 	private $rootSize;
 
 	public function __construct($parameters) {
 		parent::__construct($parameters);
-		$this->root = $parameters['root'];
 		$this->rootSize = $parameters['root_size'];
 	}
 
 	public function getCache($path = '', $storage = null) {
 		$parentCache = parent::getCache($path, $storage);
-		return new GroupUsedSpaceCacheWrapper($parentCache, $this->root, $this->rootSize);
+		return new GroupUsedSpaceCacheWrapper($parentCache, $this->sizeRoot, $this->rootSize);
 	}
 }
