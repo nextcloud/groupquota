@@ -22,20 +22,29 @@
 namespace OCA\GroupQuota\Controller;
 
 use OCA\GroupQuota\Quota\QuotaManager;
+use OCA\GroupQuota\Quota\UsedSpaceCalculator;
 use OCP\AppFramework\Http\DataResponse;
+use OCP\AppFramework\OCS\OCSBadRequestException;
 use OCP\AppFramework\OCSController;
+use OCP\IGroupManager;
 use OCP\IRequest;
 
 class QuotaController extends OCSController {
 	private $quotaManager;
+	private $usedSpaceCalculator;
+	private $groupManager;
 
 	public function __construct(
 		$AppName,
 		IRequest $request,
-		QuotaManager $quotaManager
+		QuotaManager $quotaManager,
+		UsedSpaceCalculator $usedSpaceCalculator,
+		IGroupManager $groupManager
 	) {
 		parent::__construct($AppName, $request);
 		$this->quotaManager = $quotaManager;
+		$this->usedSpaceCalculator = $usedSpaceCalculator;
+		$this->groupManager = $groupManager;
 	}
 
 	/**
@@ -44,15 +53,17 @@ class QuotaController extends OCSController {
 	 * @return DataResponse
 	 */
 	public function setQuota($groupId, $quota) {
+		$group = $this->groupManager->get($groupId);
+		if (!$group) {
+			throw new OCSBadRequestException('Group not found: ' . $groupId);
+		}
 		$quotaBytes = \OC_Helper::computerFileSize($quota);
 		if (!$quotaBytes) {
-			throw new \InvalidArgumentException('Invalid quota');
+			throw new OCSBadRequestException('Invalid quota');
 		}
 		$this->quotaManager->setGroupQuota($groupId, $quotaBytes);
-		return new DataResponse([
-			'quota_bytes' => $quotaBytes,
-			'quota_human' => \OC_Helper::humanFileSize($quotaBytes)
-		]);
+		$used = $this->usedSpaceCalculator->getUsedSpaceByGroup($group);
+		return $this->buildQuotaResponse($quotaBytes, $used);
 	}
 
 	/**
@@ -60,10 +71,22 @@ class QuotaController extends OCSController {
 	 * @return DataResponse
 	 */
 	public function getQuota($groupId) {
+		$group = $this->groupManager->get($groupId);
+		if (!$group) {
+			throw new OCSBadRequestException('Group not found: ' . $groupId);
+		}
 		$quotaBytes = $this->quotaManager->getGroupQuota($groupId);
+		$used = $this->usedSpaceCalculator->getUsedSpaceByGroup($group);
+		return $this->buildQuotaResponse($quotaBytes, $used);
+	}
+
+	private function buildQuotaResponse($quotaBytes, $used) {
 		return new DataResponse([
 			'quota_bytes' => $quotaBytes,
-			'quota_human' => \OC_Helper::humanFileSize($quotaBytes)
+			'quota_human' => \OC_Helper::humanFileSize($quotaBytes),
+			'used_bytes' => $used,
+			'used_human' => \OC_Helper::humanFileSize($used),
+			'used_relative' => round($used / $quotaBytes * 100, 2)
 		]);
 	}
 }
