@@ -61,6 +61,9 @@ class Application extends App {
 					list($groupId, $quota) = $this->getQuotaManager()->getUserQuota($user);
 					if ($quota !== \OCP\Files\FileInfo::SPACE_UNLIMITED) {
 						$group = $this->getContainer()->getServer()->getGroupManager()->get($groupId);
+						if (!$group) {
+							throw new \Exception("Group $group not found");
+						}
 						return new GroupQuotaWrapper([
 							'storage' => $storage,
 							'root_size' => $this->getUsedSpaceCalculator()->getUsedSpaceByGroup($group),
