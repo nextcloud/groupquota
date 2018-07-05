@@ -27,6 +27,7 @@ use OCA\GroupQuota\Wrapper\GroupQuotaWrapper;
 use OCP\AppFramework\App;
 use OCP\Files\IHomeStorage;
 use OCP\Files\Storage\IStorage;
+use OCP\ILogger;
 use OCP\Util;
 
 class Application extends App {
@@ -59,10 +60,11 @@ class Application extends App {
 				if (is_object($storage->getUser())) {
 					$user = $storage->getUser();
 					list($groupId, $quota) = $this->getQuotaManager()->getUserQuota($user);
-					if ($quota !== \OCP\Files\FileInfo::SPACE_UNLIMITED) {
+					if ($quota !== \OCP\Files\FileInfo::SPACE_UNLIMITED && $groupId !== '') {
 						$group = $this->getContainer()->getServer()->getGroupManager()->get($groupId);
 						if (!$group) {
-							throw new \Exception("Group $group not found");
+							\OC::$server->getLogger()->log(ILogger::DEBUG, "Group not found: $group", ['app' => 'groupquota']);
+							return $storage;
 						}
 						return new GroupQuotaWrapper([
 							'storage' => $storage,
