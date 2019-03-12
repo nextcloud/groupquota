@@ -4,9 +4,33 @@ Allow setting a disk quota for an entire group.
 
 ## Usage
 
-Group quota can only be configured trough the api, no admin UI is currently available.
+Group quota can only be configured trough the command line or rest api, no admin UI is currently available.
 
-### Get the quota for a group
+### OCC commandline Api
+
+#### Get the quota for a group
+
+```bash
+occ groupquota:get Test
+```
+
+#### Get the used space for a group
+
+```bash
+occ groupquota:used Test
+```
+
+#### Set the quota for a group
+
+```bash
+occ groupquota:get Test 2GB
+```
+
+All commands accept a `--format`(`-f`) option to format their output in a human readable format.
+
+### OCS Rest API
+
+#### Get the quota and used space for a group
 
 ```bash
 curl -u admin:admin -H 'OCS-APIRequest: true' https://example.com/apps/groupquota/quota/Test'
@@ -34,7 +58,7 @@ curl -u admin:admin -H 'OCS-APIRequest: true' https://example.com/apps/groupquot
 
 *Note*: as with all OCS requests the response can be json formatted by sending an `Accept: application/json` header
 
-### Set the quota for a group
+#### Set the quota for a group
 
 Set the quota of group "Test" to 2GB
 

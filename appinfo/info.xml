@@ -20,7 +20,13 @@ Note: configuring quota is only possible trough the API, no admin interface is c
 
 	<category>files</category>
 
+	<commands>
+		<command>OCA\GroupQuota\Command\GetQuota</command>
+		<command>OCA\GroupQuota\Command\SetQuota</command>
+		<command>OCA\GroupQuota\Command\GetUsed</command>
+	</commands>
+
 	<dependencies>
-		<nextcloud min-version="12" max-version="15"/>
+		<nextcloud min-version="12" max-version="16"/>
 	</dependencies>
 </info>
