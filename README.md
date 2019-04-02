@@ -23,7 +23,7 @@ occ groupquota:used Test
 #### Set the quota for a group
 
 ```bash
-occ groupquota:get Test 2GB
+occ groupquota:set Test 2GB
 ```
 
 All commands accept a `--format`(`-f`) option to format their output in a human readable format.
