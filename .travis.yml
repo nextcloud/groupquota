@@ -9,7 +9,7 @@ env:
     - APP_NAME=groupquota
     - DB=sqlite
   matrix:
-    - CORE_BRANCH=stable16
+    - CORE_BRANCH=stable17
 
 before_install:
   - cd ../
