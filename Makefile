@@ -10,6 +10,7 @@ cert_dir=$(HOME)/.nextcloud/certificates
 version+=0.1.0
 
 clean:
+	rm -rf $(project_dir)/vendor
 	rm -rf $(sign_dir)
 	rm -rf $(build_dir)/$(app_name)-$(version).tar.gz
 
