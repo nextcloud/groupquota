@@ -7,7 +7,7 @@ appstore_dir=$(build_dir)/appstore
 sign_dir=$(build_dir)/sign
 package_name=$(app_name)
 cert_dir=$(HOME)/.nextcloud/certificates
-version+=0.1.1
+version+=0.1.2
 
 clean:
 	rm -rf $(project_dir)/vendor
