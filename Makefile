@@ -15,11 +15,17 @@ clean:
 
 release: appstore create-tag
 
+node_modules: package.json
+	npm install
+
+CHANGELOG.md: node_modules
+	node_modules/.bin/changelog
+
 create-tag:
 	git tag -s -a v$(version) -m "Tagging the $(version) release."
 	git push origin v$(version)
 
-appstore: clean
+appstore: clean CHANGELOG.md
 	mkdir -p $(sign_dir)
 	rsync -a \
 	--exclude=/docs \
