@@ -24,7 +24,6 @@ namespace OCA\GroupQuota\Quota;
 use OCP\DB\QueryBuilder\IQueryBuilder;
 use OCP\IDBConnection;
 use OCP\IGroup;
-use OCP\IGroupManager;
 use OCP\IUser;
 
 class UsedSpaceCalculator {

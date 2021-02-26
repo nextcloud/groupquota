@@ -49,7 +49,7 @@ class QuotaManager {
 
 	public function getUserQuota(IUser $user) {
 		$groups = $this->groupManager->getUserGroups($user);
-		$groupQuotas = array_map(function(IGroup $group) {
+		$groupQuotas = array_map(function (IGroup $group) {
 			return $this->getGroupQuota($group->getGID());
 		}, $groups);
 		foreach ($groupQuotas as $group => $quota) {

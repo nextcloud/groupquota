@@ -6,4 +6,3 @@ return [
 		['name' => 'Quota#getQuota', 'url' => '/quota/{groupId}', 'verb' => 'GET'],
 	],
 ];
-

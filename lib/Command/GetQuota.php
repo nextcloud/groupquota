@@ -45,7 +45,6 @@ class GetQuota extends Base {
 		$this->groupManager = $groupManager;
 		$this->quotaManager = $quotaManager;
 		$this->usedSpaceCalculator = $usedSpaceCalculator;
-
 	}
 
 	protected function configure() {

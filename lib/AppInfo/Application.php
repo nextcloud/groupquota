@@ -59,7 +59,7 @@ class Application extends App {
 				/** @var \OC\Files\Storage\Home $storage */
 				if (is_object($storage->getUser())) {
 					$user = $storage->getUser();
-					list($groupId, $quota) = $this->getQuotaManager()->getUserQuota($user);
+					[$groupId, $quota] = $this->getQuotaManager()->getUserQuota($user);
 					if ($quota !== \OCP\Files\FileInfo::SPACE_UNLIMITED && $groupId !== '') {
 						$group = $this->getContainer()->getServer()->getGroupManager()->get($groupId);
 						if (!$group) {
