@@ -39,12 +39,8 @@ class QuotaManager {
 		$this->groupManager = $groupManager;
 	}
 
-	/**
-	 * @param string $groupId
-	 * @return int
-	 */
-	public function getGroupQuota($groupId) {
-		return $this->config->getAppValue('groupquota', 'quota_' . $groupId, FileInfo::SPACE_UNLIMITED) + 0;
+	public function getGroupQuota(string $groupId): int {
+		return (int)$this->config->getAppValue('groupquota', 'quota_' . $groupId, (string)FileInfo::SPACE_UNLIMITED);
 	}
 
 	public function getUserQuota(IUser $user) {
@@ -60,11 +56,7 @@ class QuotaManager {
 		return ['', FileInfo::SPACE_UNLIMITED];
 	}
 
-	/**
-	 * @param string $groupId
-	 * @param int $quota
-	 */
-	public function setGroupQuota($groupId, $quota) {
-		$this->config->setAppValue('groupquota', 'quota_' . $groupId, $quota);
+	public function setGroupQuota(string $groupId, int $quota) {
+		$this->config->setAppValue('groupquota', 'quota_' . $groupId, (string)$quota);
 	}
 }

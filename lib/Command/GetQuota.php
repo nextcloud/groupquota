@@ -56,7 +56,7 @@ class GetQuota extends Base {
 		parent::configure();
 	}
 
-	protected function execute(InputInterface $input, OutputInterface $output) {
+	protected function execute(InputInterface $input, OutputInterface $output): int {
 		$groupId = $input->getArgument('name');
 		$group = $this->groupManager->get($groupId);
 		if (!$group) {
@@ -68,5 +68,7 @@ class GetQuota extends Base {
 			$quota = $quota === FileInfo::SPACE_UNLIMITED ? 'Unlimited' : \OC_Helper::humanFileSize($quota);
 		}
 		$output->writeln($quota);
+
+		return 0;
 	}
 }

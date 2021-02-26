@@ -55,7 +55,7 @@ class GetUsed extends Base {
 		parent::configure();
 	}
 
-	protected function execute(InputInterface $input, OutputInterface $output) {
+	protected function execute(InputInterface $input, OutputInterface $output): int {
 		$groupId = $input->getArgument('name');
 		$group = $this->groupManager->get($groupId);
 		if (!$group) {
@@ -64,5 +64,7 @@ class GetUsed extends Base {
 		}
 		$used = $this->usedSpaceCalculator->getUsedSpaceByGroup($group);
 		$output->writeln($input->getOption('format') ? \OC_Helper::humanFileSize($used) : $used);
+
+		return 0;
 	}
 }

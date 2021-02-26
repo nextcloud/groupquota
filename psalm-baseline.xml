@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="4.x-dev@">
+  <file src="lib/Quota/UsedSpaceCalculator.php">
+    <InvalidArgument occurrences="1"/>
+  </file>
+</files>
