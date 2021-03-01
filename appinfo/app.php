@@ -1,4 +1,6 @@
 <?php
 
-$application = new \OCA\GroupQuota\AppInfo\Application();
+use OCA\GroupQuota\AppInfo\Application;
+
+$application = \OC::$server->query(Application::class);
 $application->register();
