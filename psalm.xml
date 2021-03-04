@@ -14,7 +14,7 @@
 		<directory name="vendor/christophwurst/nextcloud"/>
 	</extraFiles>
 	<stubs>
-		<file name="tests/stub.phpstub" preloadClasses="true"/>
+		<file name="tests/stubs/stub.phpstub" preloadClasses="true"/>
 	</stubs>
 	<issueHandlers>
 		<UndefinedClass>
