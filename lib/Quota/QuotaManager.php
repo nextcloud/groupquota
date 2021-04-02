@@ -62,14 +62,16 @@ class QuotaManager {
 	
 	public function getQuotaList() {
 		$appKeys = $this->config->getAppKeys('groupquota');
-		$quotas = array();
+		$quotas = [];
 		foreach ($appKeys as $appKey => $appKeyValue) {
 			$appKeyValueArray = explode('_', $appKeyValue, 2);
 			
-			if (sizeof($appKeyValueArray) != 2)
+			if (sizeof($appKeyValueArray) != 2) {
 				continue;
-			if ($appKeyValueArray[0] != "quota")
+			}
+			if ($appKeyValueArray[0] != "quota") {
 				continue;
+			}
 			
 			$groupId = $appKeyValueArray[1];
 			$quota = $this->config->getAppValue('groupquota', $appKeyValue);
