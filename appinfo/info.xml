@@ -28,6 +28,6 @@ Note: configuring quota is only possible trough the API, no admin interface is c
 	</commands>
 
 	<dependencies>
-		<nextcloud min-version="20" max-version="21"/>
+		<nextcloud min-version="20" max-version="22"/>
 	</dependencies>
 </info>
