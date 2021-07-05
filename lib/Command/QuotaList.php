@@ -55,7 +55,7 @@ class QuotaList extends Base {
 
 	protected function execute(InputInterface $input, OutputInterface $output): int {
 		$quotas = $this->quotaManager->getQuotaList();
-		$output->writeln("Group : Quota");
+		$output->writeln("Group: Quota");
 		foreach ($quotas as $groupId => $quota) {
 			$quotaTxt = $input->getOption('format') ? \OC_Helper::humanFileSize($quota) : $quota;
 			$output->writeln($groupId . ": " . $quotaTxt);
