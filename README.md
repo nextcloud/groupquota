@@ -26,6 +26,12 @@ occ groupquota:used Test
 occ groupquota:set Test 2GB
 ```
 
+#### Lists all configured quotas
+
+```bash
+occ groupquota:list
+```
+
 All commands accept a `--format`(`-f`) option to format their output in a human readable format.
 
 ### OCS Rest API
