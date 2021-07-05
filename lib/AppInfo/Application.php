@@ -25,14 +25,25 @@ use OCA\GroupQuota\Quota\UsedSpaceCalculator;
 use OCA\GroupQuota\Quota\QuotaManager;
 use OCA\GroupQuota\Wrapper\GroupQuotaWrapper;
 use OCP\AppFramework\App;
+use OCP\AppFramework\Bootstrap\IBootContext;
+use OCP\AppFramework\Bootstrap\IBootstrap;
+use OCP\AppFramework\Bootstrap\IRegistrationContext;
 use OCP\Files\IHomeStorage;
 use OCP\Files\Storage\IStorage;
 use OCP\ILogger;
 use OCP\Util;
 
-class Application extends App {
+class Application extends App implements IBootstrap {
 	public function __construct(array $urlParams = []) {
 		parent::__construct('groupquota', $urlParams);
+	}
+
+	public function register(IRegistrationContext $context): void {
+	}
+
+
+	public function boot(IBootContext $context): void {
+		Util::connectHook('OC_Filesystem', 'preSetup', $this, 'addStorageWrapper');
 	}
 
 	/**
@@ -47,10 +58,6 @@ class Application extends App {
 	 */
 	private function getQuotaManager() {
 		return $this->getContainer()->query(QuotaManager::class);
-	}
-
-	public function register() {
-		Util::connectHook('OC_Filesystem', 'preSetup', $this, 'addStorageWrapper');
 	}
 
 	public function addStorageWrapper() {

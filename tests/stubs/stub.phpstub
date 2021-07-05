@@ -244,6 +244,7 @@ namespace {
 namespace OC\Files\Storage\Wrapper{
 
 	use OCP\Files\Cache\ICache;
+	use OCP\Files\Cache\ICacheEntry;
 	use OCP\Files\Search\ISearchQuery;
 	use OCP\Files\Storage\IStorage;
 
@@ -430,8 +431,6 @@ namespace OC\Files\Storage\Wrapper{
 		public function getWatcher() {
 			throw new \Exception('stub');
 		}
-
-
 	}
 
 	class Quota extends CacheWrapper {
@@ -450,6 +449,8 @@ namespace OC\Files\Storage\Wrapper{
 namespace OC\Files\Cache\Wrapper {
 
 	use OCP\Files\Cache\ICache;
+	use OCP\Files\Cache\ICacheEntry;
+	use OCP\Files\Search\ISearchOperator;
 	use OCP\Files\Search\ISearchQuery;
 
 	class CacheWrapper implements ICache {
@@ -536,5 +537,16 @@ namespace OC\Files\Cache\Wrapper {
 			throw new \Exception('stub');
 		}
 
+		public function copyFromCache(ICache $sourceCache, ICacheEntry $sourceEntry, string $targetPath): int {
+			throw new \Exception('stub');
+		}
+
+		public function getQueryFilterForStorage(): ISearchOperator {
+			throw new \Exception('stub');
+		}
+
+		public function getCacheEntryFromSearchResult(ICacheEntry $rawEntry): ?ICacheEntry {
+			throw new \Exception('stub');
+		}
 	}
 }
