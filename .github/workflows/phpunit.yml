@@ -14,7 +14,7 @@ jobs:
       matrix:
         php-versions: ['7.4']
         databases: ['sqlite']
-        server-versions: ['stable20', 'stable21', 'stable22', 'master']
+        server-versions: ['stable21', 'stable22', 'stable23', 'master']
 
     name: php${{ matrix.php-versions }}-${{ matrix.databases }}-${{ matrix.server-versions }}
 
@@ -75,7 +75,7 @@ jobs:
 
     services:
       mysql:
-        image: mariadb
+        image: mariadb:10.5
         ports:
           - 4444:3306/tcp
         env:
