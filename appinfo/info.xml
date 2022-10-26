@@ -8,7 +8,7 @@
 Note: configuring quota is only possible trough the API, no admin interface is currently available.]]></description>
 	<licence>AGPL</licence>
 	<author>Robin Appelman</author>
-	<version>0.1.8</version>
+	<version>0.1.9</version>
 	<types>
 		<filesystem/>
 	</types>
@@ -28,6 +28,6 @@ Note: configuring quota is only possible trough the API, no admin interface is c
 	</commands>
 
 	<dependencies>
-		<nextcloud min-version="22" max-version="24"/>
+		<nextcloud min-version="23" max-version="25"/>
 	</dependencies>
 </info>
