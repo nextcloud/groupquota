@@ -7,7 +7,7 @@
 	<description><![CDATA[Allow setting a disk quota for an entire group.
 
 Note: configuring quota is only possible trough the API, no admin interface is currently available.]]></description>
-	<version>0.1.9</version>
+	<version>0.1.10</version>
 	<licence>agpl</licence>
 	<author>Robin Appelman</author>
 	<namespace>GroupQuota</namespace>
@@ -22,7 +22,7 @@ Note: configuring quota is only possible trough the API, no admin interface is c
 	<repository type="git">https://github.com/nextcloud/groupquota.git</repository>
 
 	<dependencies>
-		<nextcloud min-version="23" max-version="25"/>
+		<nextcloud min-version="24" max-version="26"/>
 	</dependencies>
 
 	<commands>
