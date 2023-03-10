@@ -1,24 +1,29 @@
 <?xml version="1.0"?>
-<info>
+<info xmlns:xsi= "http://www.w3.org/2001/XMLSchema-instance"
+	  xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
 	<id>groupquota</id>
 	<name>Group quota</name>
 	<summary>Give filesystem quotas to groups</summary>
 	<description><![CDATA[Allow setting a disk quota for an entire group.
 
 Note: configuring quota is only possible trough the API, no admin interface is currently available.]]></description>
-	<licence>AGPL</licence>
-	<author>Robin Appelman</author>
 	<version>0.1.9</version>
+	<licence>agpl</licence>
+	<author>Robin Appelman</author>
+	<namespace>GroupQuota</namespace>
 	<types>
 		<filesystem/>
 	</types>
-	<namespace>GroupQuota</namespace>
+
+	<category>files</category>
 
 	<website>https://github.com/nextcloud/groupquota</website>
 	<bugs>https://github.com/nextcloud/groupquota/issues</bugs>
 	<repository type="git">https://github.com/nextcloud/groupquota.git</repository>
 
-	<category>files</category>
+	<dependencies>
+		<nextcloud min-version="23" max-version="25"/>
+	</dependencies>
 
 	<commands>
 		<command>OCA\GroupQuota\Command\GetQuota</command>
@@ -26,8 +31,4 @@ Note: configuring quota is only possible trough the API, no admin interface is c
 		<command>OCA\GroupQuota\Command\GetUsed</command>
 		<command>OCA\GroupQuota\Command\QuotaList</command>
 	</commands>
-
-	<dependencies>
-		<nextcloud min-version="23" max-version="25"/>
-	</dependencies>
 </info>
