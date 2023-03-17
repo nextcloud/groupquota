@@ -11,7 +11,7 @@
 		<directory name="lib"/>
 	</projectFiles>
 	<extraFiles>
-		<directory name="vendor/christophwurst/nextcloud"/>
+		<directory name="vendor/nextcloud/ocp"/>
 	</extraFiles>
 	<stubs>
 		<file name="tests/stubs/stub.phpstub" preloadClasses="true"/>
@@ -22,5 +22,10 @@
 				<referencedClass name="OC" />
 			</errorLevel>
 		</UndefinedClass>
+		<UndefinedDocblockClass>
+			<errorLevel type="suppress">
+				<referencedClass name="OC\AppFramework\OCS\BaseResponse" />
+			</errorLevel>
+		</UndefinedDocblockClass>
 	</issueHandlers>
 </psalm>

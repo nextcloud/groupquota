@@ -30,9 +30,9 @@ use OCP\IGroupManager;
 use OCP\IRequest;
 
 class QuotaController extends OCSController {
-	private $quotaManager;
-	private $usedSpaceCalculator;
-	private $groupManager;
+	private QuotaManager $quotaManager;
+	private UsedSpaceCalculator $usedSpaceCalculator;
+	private IGroupManager $groupManager;
 
 	public function __construct(
 		$AppName,
@@ -47,12 +47,7 @@ class QuotaController extends OCSController {
 		$this->groupManager = $groupManager;
 	}
 
-	/**
-	 * @param string $groupId
-	 * @param string $quota
-	 * @return DataResponse
-	 */
-	public function setQuota($groupId, $quota) {
+	public function setQuota(string $groupId, $quota): DataResponse {
 		$group = $this->groupManager->get($groupId);
 		if (!$group) {
 			throw new OCSBadRequestException('Group not found: ' . $groupId);
@@ -66,11 +61,7 @@ class QuotaController extends OCSController {
 		return $this->buildQuotaResponse($quotaBytes, $used);
 	}
 
-	/**
-	 * @param string $groupId
-	 * @return DataResponse
-	 */
-	public function getQuota($groupId) {
+	public function getQuota(string $groupId): DataResponse {
 		$group = $this->groupManager->get($groupId);
 		if (!$group) {
 			throw new OCSBadRequestException('Group not found: ' . $groupId);
@@ -80,7 +71,7 @@ class QuotaController extends OCSController {
 		return $this->buildQuotaResponse($quotaBytes, $used);
 	}
 
-	private function buildQuotaResponse($quotaBytes, $used) {
+	private function buildQuotaResponse($quotaBytes, $used): DataResponse {
 		return new DataResponse([
 			'quota_bytes' => $quotaBytes,
 			'quota_human' => \OC_Helper::humanFileSize($quotaBytes),
