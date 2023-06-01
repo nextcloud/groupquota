@@ -21,8 +21,8 @@
 
 namespace OCA\GroupQuota\AppInfo;
 
-use OCA\GroupQuota\Quota\UsedSpaceCalculator;
 use OCA\GroupQuota\Quota\QuotaManager;
+use OCA\GroupQuota\Quota\UsedSpaceCalculator;
 use OCA\GroupQuota\Wrapper\GroupQuotaWrapper;
 use OCP\AppFramework\App;
 use OCP\AppFramework\Bootstrap\IBootContext;
