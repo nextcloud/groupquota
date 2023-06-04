@@ -8,7 +8,6 @@
 		"symfony/console": "5.4.19"
 	},
 	"license": "AGPLv3",
-	"require": {},
 	"scripts": {
 		"lint": "find . -name \\*.php -not -path './vendor/*' -not -path './build/*' -not -path './tests/integration/vendor/*' -print0 | xargs -0 -n1 php -l",
 		"cs:check": "php-cs-fixer fix --dry-run --diff",
