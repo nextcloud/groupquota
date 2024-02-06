@@ -26,6 +26,12 @@ occ groupquota:used Test
 occ groupquota:set Test 2GB
 ```
 
+#### Delete the quota for a group
+
+```bash
+occ groupquota:delete Test
+```
+
 #### Lists all configured quotas
 
 ```bash
