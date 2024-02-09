@@ -28,6 +28,7 @@ Note: configuring quota is only possible trough the API, no admin interface is c
 	<commands>
 		<command>OCA\GroupQuota\Command\GetQuota</command>
 		<command>OCA\GroupQuota\Command\SetQuota</command>
+		<command>OCA\GroupQuota\Command\DeleteQuota</command>
 		<command>OCA\GroupQuota\Command\GetUsed</command>
 		<command>OCA\GroupQuota\Command\QuotaList</command>
 	</commands>
