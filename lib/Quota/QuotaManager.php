@@ -80,4 +80,8 @@ class QuotaManager {
 		}
 		return $quotas;
 	}
+
+	public function deleteGroupQuota(string $groupId) {
+		$this->config->deleteAppValue('groupquota', 'quota_' . $groupId);
+	}
 }

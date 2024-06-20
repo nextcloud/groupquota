@@ -80,4 +80,12 @@ class QuotaController extends OCSController {
 			'used_relative' => round($used / $quotaBytes * 100, 2)
 		]);
 	}
+
+	public function deleteQuota(string $groupId): void {
+		$group = $this->groupManager->get($groupId);
+		if (!$group) {
+			throw new OCSBadRequestException('Group not found: ' . $groupId);
+		}
+		$this->quotaManager->deleteGroupQuota($groupId);
+	}
 }
