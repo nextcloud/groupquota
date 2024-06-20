@@ -7,7 +7,7 @@
 	<description><![CDATA[Allow setting a disk quota for an entire group.
 
 Note: configuring quota is only possible trough the API, no admin interface is currently available.]]></description>
-	<version>0.1.13</version>
+	<version>0.2.0</version>
 	<licence>agpl</licence>
 	<author>Robin Appelman</author>
 	<namespace>GroupQuota</namespace>
