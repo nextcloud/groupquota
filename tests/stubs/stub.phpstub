@@ -431,6 +431,10 @@ namespace OC\Files\Storage\Wrapper{
 		public function getWatcher() {
 			throw new \Exception('stub');
 		}
+
+		public function setOwner(?string $user): void {
+			throw new \Exception('stub');
+		}
 	}
 
 	class Quota extends CacheWrapper {
