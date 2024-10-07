@@ -22,6 +22,7 @@
 namespace OCA\GroupQuota\Wrapper;
 
 use OC\Files\Storage\Wrapper\Quota;
+use OCP\Files\Cache\ICache;
 
 class GroupQuotaWrapper extends Quota {
 	/** @var int */
@@ -32,7 +33,7 @@ class GroupQuotaWrapper extends Quota {
 		$this->rootSize = $parameters['root_size'];
 	}
 
-	public function getCache($path = '', $storage = null) {
+	public function getCache($path = '', $storage = null): ICache {
 		$parentCache = parent::getCache($path, $storage);
 		return new GroupUsedSpaceCacheWrapper($parentCache, $this->sizeRoot, $this->rootSize);
 	}
