@@ -66,12 +66,8 @@ class GetFree extends Base {
 
 		$total_quota = $this->quotaManager->getGroupQuota($groupId);
 		if ($total_quota === FileInfo::SPACE_UNLIMITED) {
-			if ($input->getOption('format')) {
-				$total_quota = $total_quota === FileInfo::SPACE_UNLIMITED ? 'Unlimited' : \OC_Helper::humanFileSize($total_quota);
-			}
-			$output->writeln($total_quota);
-		}
-		else {
+			$output->writeln($input->getOption('format') ? 'Unlimited' : FileInfo::SPACE_UNLIMITED);
+		} else {
 			$used = $this->usedSpaceCalculator->getUsedSpaceByGroup($group);
 			$free = $total_quota - $used;
 			$output->writeln($input->getOption('format') ? \OC_Helper::humanFileSize($free) : $free);
