@@ -31,5 +31,6 @@ Note: configuring quota is only possible trough the API, no admin interface is c
 		<command>OCA\GroupQuota\Command\DeleteQuota</command>
 		<command>OCA\GroupQuota\Command\GetUsed</command>
 		<command>OCA\GroupQuota\Command\QuotaList</command>
+		<command>OCA\GroupQuota\Command\GetFree</command>
 	</commands>
 </info>
