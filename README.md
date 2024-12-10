@@ -20,6 +20,12 @@ occ groupquota:get Test
 occ groupquota:used Test
 ```
 
+#### Get the free space for a group
+
+```bash
+occ groupquota:free Test
+```
+
 #### Set the quota for a group
 
 ```bash
