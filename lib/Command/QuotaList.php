@@ -28,6 +28,7 @@ use OCP\IGroupManager;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Terminal;
 
 class QuotaList extends Base {
 	private $quotaManager;
@@ -55,11 +56,53 @@ class QuotaList extends Base {
 
 	protected function execute(InputInterface $input, OutputInterface $output): int {
 		$quotas = $this->quotaManager->getQuotaList();
-		$output->writeln("Group: Quota");
+		# $output->writeln("Group: Quota");
+
+		$terminal = new Terminal();
+		$terminalWidth = $terminal->getWidth();
+
+		# four headers: group, used, free, total quota
+		$columnWidth = intdiv($terminalWidth, 4);
+		$widths = [$terminalWidth - 3 * $columnWidth - 3, $columnWidth, $columnWidth, $columnWidth];
+
+		# header
+		$text = $this->formatTableRow(['group', 'free', 'used', 'total'], $widths);
+		$output->writeln($text);
+		$text = $this->formatTableRow(['', '', '', ''], $widths, '-');
+		$output->writeln($text);
+
+		# content
 		foreach ($quotas as $groupId => $quota) {
+			$group = $this->groupManager->get($groupId);
+			$used = $this->usedSpaceCalculator->getUsedSpaceByGroup($group);
+			$free = $quota - $used;
 			$quotaTxt = $input->getOption('format') ? \OC_Helper::humanFileSize($quota) : $quota;
-			$output->writeln($groupId . ": " . $quotaTxt);
+			$usedTxt = $input->getOption('format') ? \OC_Helper::humanFileSize($used) : $used;
+			$freeTxt = $input->getOption('format') ? \OC_Helper::humanFileSize($free) : $free;
+
+			$texts = [$groupId, $freeTxt, $usedTxt, $quotaTxt];
+			$text = $this->formatTableRow($texts, $widths);
+			$output->writeln($text);
 		}
 		return 0;
+	}
+
+	private function ellipseAndPadText(string $text, int $width, string $sep = ' '): string {
+		$text = str_replace(["\r", "\n"], ' ', $text);
+		$text = str_pad($text, $width, $sep, STR_PAD_RIGHT);
+		$text = strlen($text) > $width ? substr($text, 0, $width - 2) . ' …' : $text;
+		return $text;
+	}
+
+	private function formatTableRow(array $texts, array $widths, string $sep = ' '): string {
+		$callback = function ($a, $b) use ($sep) {
+			return $this->ellipseAndPadText($a, $b, $sep);
+		};
+		$formattedTexts = array_map(
+			$callback,
+			$texts,
+			$widths
+		);
+		return implode('|', $formattedTexts);
 	}
 }
