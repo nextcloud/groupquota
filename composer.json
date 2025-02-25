@@ -2,10 +2,8 @@
 	"type": "project",
 	"require-dev": {
 		"phpunit/phpunit": "^9",
-		"nextcloud/coding-standard": "^v1.1.1",
-		"nextcloud/ocp": "dev-master",
-		"psalm/phar": "^5.4.0",
-		"symfony/console": "5.4.19"
+		"nextcloud/coding-standard": "^v1.3.2",
+		"vimeo/psalm": "^6.8"
 	},
 	"license": "AGPLv3",
 	"scripts": {
@@ -13,6 +11,9 @@
 		"cs:check": "php-cs-fixer fix --dry-run --diff",
 		"cs:fix": "php-cs-fixer fix",
 		"test:unit": "phpunit -c tests/phpunit.xml",
-		"psalm": "psalm.phar"
+		"psalm": "psalm --threads=1",
+		"psalm:update-baseline": "psalm --threads=1 --update-baseline",
+		"psalm:clear": "psalm --clear-cache && psalm --clear-global-cache",
+		"psalm:fix": "psalm --alter --issues=InvalidReturnType,InvalidNullableReturnType,MissingParamType,InvalidFalsableReturnType"
 	}
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Copyright (c) 2019 Robin Appelman <robin@icewind.nl>
  *
@@ -39,7 +40,7 @@ class GetFree extends Base {
 	public function __construct(
 		IGroupManager $groupManager,
 		QuotaManager $quotaManager,
-		UsedSpaceCalculator $usedSpaceCalculator
+		UsedSpaceCalculator $usedSpaceCalculator,
 	) {
 		parent::__construct();
 		$this->groupManager = $groupManager;
@@ -66,13 +67,13 @@ class GetFree extends Base {
 
 		$total_quota = $this->quotaManager->getGroupQuota($groupId);
 		if ($total_quota === FileInfo::SPACE_UNLIMITED) {
-			$output->writeln($input->getOption('format') ? 'Unlimited' : FileInfo::SPACE_UNLIMITED);
+			$output->writeln($input->getOption('format') ? 'Unlimited' : (string)FileInfo::SPACE_UNLIMITED);
 		} else {
 			$used = $this->usedSpaceCalculator->getUsedSpaceByGroup($group);
 			$free = $total_quota - $used;
-			$output->writeln($input->getOption('format') ? \OC_Helper::humanFileSize($free) : $free);
+			$output->writeln($input->getOption('format') ? \OC_Helper::humanFileSize($free) : (string)$free);
 		}
-		
+
 
 		return 0;
 	}

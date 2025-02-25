@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Copyright (c) 2018 Robin Appelman <robin@icewind.nl>
  *
@@ -39,7 +40,7 @@ class QuotaController extends OCSController {
 		IRequest $request,
 		QuotaManager $quotaManager,
 		UsedSpaceCalculator $usedSpaceCalculator,
-		IGroupManager $groupManager
+		IGroupManager $groupManager,
 	) {
 		parent::__construct($AppName, $request);
 		$this->quotaManager = $quotaManager;

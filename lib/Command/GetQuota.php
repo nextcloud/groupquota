@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Copyright (c) 2019 Robin Appelman <robin@icewind.nl>
  *
@@ -39,7 +40,7 @@ class GetQuota extends Base {
 	public function __construct(
 		IGroupManager $groupManager,
 		QuotaManager $quotaManager,
-		UsedSpaceCalculator $usedSpaceCalculator
+		UsedSpaceCalculator $usedSpaceCalculator,
 	) {
 		parent::__construct();
 		$this->groupManager = $groupManager;
