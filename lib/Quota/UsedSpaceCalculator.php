@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Copyright (c) 2018 Robin Appelman <robin@icewind.nl>
  *
@@ -38,7 +39,7 @@ class UsedSpaceCalculator {
 	 * @param IGroup $group
 	 * @return integer
 	 */
-	public function getUsedSpaceByGroup(IGroup $group) {
+	public function getUsedSpaceByGroup(IGroup $group): int {
 		$users = $group->getUsers();
 		if (count($users) === 0) {
 			return 0;
@@ -63,6 +64,6 @@ class UsedSpaceCalculator {
 			->where($query->expr()->in('mount_point', $mountPointArguments))
 			->andWhere($query->expr()->gte('size', $query->expr()->literal(0, IQueryBuilder::PARAM_INT)));
 
-		return $query->execute()->fetchColumn() + 0;
+		return $query->executeQuery()->fetchColumn() + 0;
 	}
 }

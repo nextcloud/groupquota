@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Copyright (c) 2018 Robin Appelman <robin@icewind.nl>
  *
@@ -39,7 +40,7 @@ class QuotaController extends OCSController {
 		IRequest $request,
 		QuotaManager $quotaManager,
 		UsedSpaceCalculator $usedSpaceCalculator,
-		IGroupManager $groupManager
+		IGroupManager $groupManager,
 	) {
 		parent::__construct($AppName, $request);
 		$this->quotaManager = $quotaManager;
@@ -71,13 +72,13 @@ class QuotaController extends OCSController {
 		return $this->buildQuotaResponse($quotaBytes, $used);
 	}
 
-	private function buildQuotaResponse($quotaBytes, $used): DataResponse {
+	private function buildQuotaResponse(int $quotaBytes, int $used): DataResponse {
 		return new DataResponse([
 			'quota_bytes' => $quotaBytes,
 			'quota_human' => \OC_Helper::humanFileSize($quotaBytes),
 			'used_bytes' => $used,
 			'used_human' => \OC_Helper::humanFileSize($used),
-			'used_relative' => round($used / $quotaBytes * 100, 2)
+			'used_relative' => round((float)$used / (float)$quotaBytes * 100.0, 2)
 		]);
 	}
 

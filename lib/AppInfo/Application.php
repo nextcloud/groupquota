@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Copyright (c) 2018 Robin Appelman <robin@icewind.nl>
  *
@@ -64,8 +65,8 @@ class Application extends App implements IBootstrap {
 		\OC\Files\Filesystem::addStorageWrapper('groupquota', function ($mountPoint, IStorage $storage) {
 			if ($storage->instanceOfStorage(IHomeStorage::class)) {
 				/** @var \OC\Files\Storage\Home $storage */
-				if (is_object($storage->getUser())) {
-					$user = $storage->getUser();
+				$user = $storage->getUser();
+				if (is_object($user)) {
 					[$groupId, $quota] = $this->getQuotaManager()->getUserQuota($user);
 					if ($quota !== \OCP\Files\FileInfo::SPACE_UNLIMITED && $groupId !== '') {
 						$group = $this->getContainer()->getServer()->getGroupManager()->get($groupId);

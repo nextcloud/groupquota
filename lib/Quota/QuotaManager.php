@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Copyright (c) 2018 Robin Appelman <robin@icewind.nl>
  *
@@ -69,7 +70,7 @@ class QuotaManager {
 			if (sizeof($appKeyValueArray) != 2) {
 				continue;
 			}
-			if ($appKeyValueArray[0] != "quota") {
+			if ($appKeyValueArray[0] != 'quota') {
 				continue;
 			}
 			

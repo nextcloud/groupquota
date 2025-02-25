@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @copyright Copyright (c) 2019 Robin Appelman <robin@icewind.nl>
  *
@@ -34,7 +35,7 @@ class DeleteQuota extends Base {
 
 	public function __construct(
 		IGroupManager $groupManager,
-		QuotaManager $quotaManager
+		QuotaManager $quotaManager,
 	) {
 		parent::__construct();
 		$this->groupManager = $groupManager;
