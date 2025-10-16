@@ -65,7 +65,7 @@ class SetQuota extends Base {
 			$output->writeln("<error>Group not found: $groupId</error>");
 			return -1;
 		}
-		$quota = \OC_Helper::computerFileSize($input->getArgument('quota'));
+		$quota = \OCP\Util::computerFileSize($input->getArgument('quota'));
 		$this->quotaManager->setGroupQuota($groupId, $quota);
 		if ($input->getOption('format')) {
 			$quota = $quota === FileInfo::SPACE_UNLIMITED ? 'Unlimited' : \OC_Helper::humanFileSize($quota);

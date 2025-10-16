@@ -53,7 +53,7 @@ class QuotaController extends OCSController {
 		if (!$group) {
 			throw new OCSBadRequestException('Group not found: ' . $groupId);
 		}
-		$quotaBytes = \OC_Helper::computerFileSize($quota);
+		$quotaBytes = \OCP\Util::computerFileSize($quota);
 		if (!$quotaBytes) {
 			throw new OCSBadRequestException('Invalid quota');
 		}
