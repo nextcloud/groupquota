@@ -230,7 +230,7 @@ namespace OC\Files\Storage {
 }
 
 namespace {
-	class OC_Helper {
+	class OCP\Util {
 		public static function computerFileSize(string $size): int {
 			throw new \Exception('stub');
 		}

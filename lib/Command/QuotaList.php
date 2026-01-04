@@ -77,9 +77,9 @@ class QuotaList extends Base {
 			$group = $this->groupManager->get($groupId);
 			$used = $this->usedSpaceCalculator->getUsedSpaceByGroup($group);
 			$free = $quota - $used;
-			$quotaTxt = $input->getOption('format') ? \OC_Helper::humanFileSize($quota) : $quota;
-			$usedTxt = $input->getOption('format') ? \OC_Helper::humanFileSize($used) : $used;
-			$freeTxt = $input->getOption('format') ? \OC_Helper::humanFileSize($free) : $free;
+			$quotaTxt = $input->getOption('format') ? \OCP\Util::humanFileSize($quota) : $quota;
+			$usedTxt = $input->getOption('format') ? \OCP\Util::humanFileSize($used) : $used;
+			$freeTxt = $input->getOption('format') ? \OCP\Util::humanFileSize($free) : $free;
 
 			$texts = [$groupId, $freeTxt, $usedTxt, $quotaTxt];
 			$text = $this->formatTableRow($texts, $widths);
