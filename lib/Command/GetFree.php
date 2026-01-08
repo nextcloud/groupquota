@@ -71,7 +71,7 @@ class GetFree extends Base {
 		} else {
 			$used = $this->usedSpaceCalculator->getUsedSpaceByGroup($group);
 			$free = $total_quota - $used;
-			$output->writeln($input->getOption('format') ? \OC_Helper::humanFileSize($free) : (string)$free);
+			$output->writeln($input->getOption('format') ? \OCP\Util::humanFileSize($free) : (string)$free);
 		}
 
 

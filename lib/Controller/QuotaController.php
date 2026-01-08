@@ -75,9 +75,9 @@ class QuotaController extends OCSController {
 	private function buildQuotaResponse(int $quotaBytes, int $used): DataResponse {
 		return new DataResponse([
 			'quota_bytes' => $quotaBytes,
-			'quota_human' => \OC_Helper::humanFileSize($quotaBytes),
+			'quota_human' => \OCP\Util::humanFileSize($quotaBytes),
 			'used_bytes' => $used,
-			'used_human' => \OC_Helper::humanFileSize($used),
+			'used_human' => \OCP\Util::humanFileSize($used),
 			'used_relative' => round((float)$used / (float)$quotaBytes * 100.0, 2)
 		]);
 	}
