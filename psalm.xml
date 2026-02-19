@@ -24,11 +24,6 @@
 		<file name="tests/stubs/stub.phpstub" preloadClasses="true"/>
 	</stubs>
 	<issueHandlers>
-		<UndefinedClass>
-			<errorLevel type="suppress">
-				<referencedClass name="OC" />
-			</errorLevel>
-		</UndefinedClass>
 		<UndefinedDocblockClass>
 			<errorLevel type="suppress">
 				<referencedClass name="OC\AppFramework\OCS\BaseResponse" />

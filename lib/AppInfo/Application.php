@@ -22,17 +22,12 @@
 
 namespace OCA\GroupQuota\AppInfo;
 
-use OCA\GroupQuota\Quota\QuotaManager;
-use OCA\GroupQuota\Quota\UsedSpaceCalculator;
-use OCA\GroupQuota\Wrapper\GroupQuotaWrapper;
+use OCA\GroupQuota\Listener\FilesystemSetupListener;
 use OCP\AppFramework\App;
 use OCP\AppFramework\Bootstrap\IBootContext;
 use OCP\AppFramework\Bootstrap\IBootstrap;
 use OCP\AppFramework\Bootstrap\IRegistrationContext;
-use OCP\Files\IHomeStorage;
-use OCP\Files\Storage\IStorage;
-use OCP\ILogger;
-use OCP\Util;
+use OCP\Files\Events\BeforeFileSystemSetupEvent;
 
 class Application extends App implements IBootstrap {
 	public function __construct(array $urlParams = []) {
@@ -40,50 +35,11 @@ class Application extends App implements IBootstrap {
 	}
 
 	public function register(IRegistrationContext $context): void {
+		$context->registerEventListener(BeforeFileSystemSetupEvent::class, FilesystemSetupListener::class);
 	}
 
 
 	public function boot(IBootContext $context): void {
-		Util::connectHook('OC_Filesystem', 'preSetup', $this, 'addStorageWrapper');
 	}
 
-	/**
-	 * @return UsedSpaceCalculator
-	 */
-	private function getUsedSpaceCalculator() {
-		return $this->getContainer()->query(UsedSpaceCalculator::class);
-	}
-
-	/**
-	 * @return QuotaManager
-	 */
-	private function getQuotaManager() {
-		return $this->getContainer()->query(QuotaManager::class);
-	}
-
-	public function addStorageWrapper() {
-		\OC\Files\Filesystem::addStorageWrapper('groupquota', function ($mountPoint, IStorage $storage) {
-			if ($storage->instanceOfStorage(IHomeStorage::class)) {
-				/** @var \OC\Files\Storage\Home $storage */
-				$user = $storage->getUser();
-				if (is_object($user)) {
-					[$groupId, $quota] = $this->getQuotaManager()->getUserQuota($user);
-					if ($quota !== \OCP\Files\FileInfo::SPACE_UNLIMITED && $groupId !== '') {
-						$group = $this->getContainer()->getServer()->getGroupManager()->get($groupId);
-						if (!$group) {
-							\OC::$server->getLogger()->log(ILogger::DEBUG, "Group not found: $group", ['app' => 'groupquota']);
-							return $storage;
-						}
-						return new GroupQuotaWrapper([
-							'storage' => $storage,
-							'root_size' => $this->getUsedSpaceCalculator()->getUsedSpaceByGroup($group),
-							'quota' => $quota,
-							'root' => 'files'
-						]);
-					}
-				}
-			}
-			return $storage;
-		});
-	}
 }
