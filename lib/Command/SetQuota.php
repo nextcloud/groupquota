@@ -68,7 +68,7 @@ class SetQuota extends Base {
 		$quota = \OCP\Util::computerFileSize($input->getArgument('quota'));
 		$this->quotaManager->setGroupQuota($groupId, $quota);
 		if ($input->getOption('format')) {
-			$quota = $quota === FileInfo::SPACE_UNLIMITED ? 'Unlimited' : \OC_Helper::humanFileSize($quota);
+			$quota = $quota === FileInfo::SPACE_UNLIMITED ? 'Unlimited' : \OCP\Util::humanFileSize($quota);
 		}
 		$output->writeln((string)$quota);
 
