@@ -26,8 +26,7 @@ use OC\Files\Storage\Wrapper\Quota;
 use OCP\Files\Cache\ICache;
 
 class GroupQuotaWrapper extends Quota {
-	/** @var int */
-	private $rootSize;
+	private int $rootSize;
 
 	public function __construct($parameters) {
 		parent::__construct($parameters);
