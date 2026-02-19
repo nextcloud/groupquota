@@ -175,6 +175,10 @@ namespace OC\Files\Storage {
 			throw new \Exception('stub');
 		}
 
+		public function getDirectDownloadById(string $fileId): array|false {
+			throw new \Exception('stub');
+		}
+
 		public function verifyPath($path, $fileName) {
 			throw new \Exception('stub');
 		}
@@ -381,6 +385,10 @@ namespace OC\Files\Storage\Wrapper{
 		}
 
 		public function getDirectDownload($path) {
+			throw new \Exception('stub');
+		}
+
+		public function getDirectDownloadById(string $fileId): array|false {
 			throw new \Exception('stub');
 		}
 
