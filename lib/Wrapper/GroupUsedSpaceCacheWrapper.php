@@ -47,7 +47,7 @@ class GroupUsedSpaceCacheWrapper extends CacheWrapper {
 
 	public function get($file) {
 		$data = parent::get($file);
-		if ($file === $this->root) {
+		if ($file === $this->root && $data) {
 			$data['size'] = $this->rootSize;
 		}
 		return $data;

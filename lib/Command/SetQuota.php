@@ -24,28 +24,20 @@ namespace OCA\GroupQuota\Command;
 
 use OC\Core\Command\Base;
 use OCA\GroupQuota\Quota\QuotaManager;
-use OCA\GroupQuota\Quota\UsedSpaceCalculator;
 use OCP\Files\FileInfo;
 use OCP\IGroupManager;
+use OCP\Util;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class SetQuota extends Base {
-	private $quotaManager;
-	private $usedSpaceCalculator;
-	private $groupManager;
-
 	public function __construct(
-		IGroupManager $groupManager,
-		QuotaManager $quotaManager,
-		UsedSpaceCalculator $usedSpaceCalculator,
+		private readonly IGroupManager $groupManager,
+		private readonly QuotaManager $quotaManager,
 	) {
 		parent::__construct();
-		$this->groupManager = $groupManager;
-		$this->quotaManager = $quotaManager;
-		$this->usedSpaceCalculator = $usedSpaceCalculator;
 	}
 
 	protected function configure() {
@@ -65,10 +57,15 @@ class SetQuota extends Base {
 			$output->writeln("<error>Group not found: $groupId</error>");
 			return -1;
 		}
-		$quota = \OCP\Util::computerFileSize($input->getArgument('quota'));
-		$this->quotaManager->setGroupQuota($groupId, $quota);
+		$quoteInput = $input->getArgument('quota');
+		$quota = Util::computerFileSize($quoteInput);
+		if (!$quota) {
+			$output->writeln("<error>Invalid quota input: $quoteInput</error>");
+			return -1;
+		}
+		$this->quotaManager->setGroupQuota($groupId, (int)$quota);
 		if ($input->getOption('format')) {
-			$quota = $quota === FileInfo::SPACE_UNLIMITED ? 'Unlimited' : \OCP\Util::humanFileSize($quota);
+			$quota = $quota === FileInfo::SPACE_UNLIMITED ? 'Unlimited' : Util::humanFileSize($quota);
 		}
 		$output->writeln((string)$quota);
 

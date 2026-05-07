@@ -75,15 +75,17 @@ class QuotaList extends Base {
 		# content
 		foreach ($quotas as $groupId => $quota) {
 			$group = $this->groupManager->get($groupId);
-			$used = $this->usedSpaceCalculator->getUsedSpaceByGroup($group);
-			$free = $quota - $used;
-			$quotaTxt = $input->getOption('format') ? \OCP\Util::humanFileSize($quota) : $quota;
-			$usedTxt = $input->getOption('format') ? \OCP\Util::humanFileSize($used) : $used;
-			$freeTxt = $input->getOption('format') ? \OCP\Util::humanFileSize($free) : $free;
+			if ($group) {
+				$used = $this->usedSpaceCalculator->getUsedSpaceByGroup($group);
+				$free = $quota - $used;
+				$quotaTxt = $input->getOption('format') ? \OCP\Util::humanFileSize($quota) : $quota;
+				$usedTxt = $input->getOption('format') ? \OCP\Util::humanFileSize($used) : $used;
+				$freeTxt = $input->getOption('format') ? \OCP\Util::humanFileSize($free) : $free;
 
-			$texts = [$groupId, $freeTxt, $usedTxt, $quotaTxt];
-			$text = $this->formatTableRow($texts, $widths);
-			$output->writeln($text);
+				$texts = [$groupId, $freeTxt, $usedTxt, $quotaTxt];
+				$text = $this->formatTableRow($texts, $widths);
+				$output->writeln($text);
+			}
 		}
 		return 0;
 	}

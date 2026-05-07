@@ -64,7 +64,7 @@ class GetUsed extends Base {
 			return -1;
 		}
 		$used = $this->usedSpaceCalculator->getUsedSpaceByGroup($group);
-		$output->writeln($input->getOption('format') ? \OCP\Util::humanFileSize($used) : $used);
+		$output->writeln($input->getOption('format') ? \OCP\Util::humanFileSize($used) : (string)$used);
 
 		return 0;
 	}
