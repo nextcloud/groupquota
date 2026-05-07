@@ -23,7 +23,6 @@
 namespace OCA\GroupQuota\Command;
 
 use OC\Core\Command\Base;
-use OCA\GroupQuota\Quota\QuotaManager;
 use OCA\GroupQuota\Quota\UsedSpaceCalculator;
 use OCP\IGroupManager;
 use Symfony\Component\Console\Input\InputArgument;
@@ -32,19 +31,11 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class GetUsed extends Base {
-	private $quotaManager;
-	private $usedSpaceCalculator;
-	private $groupManager;
-
 	public function __construct(
-		IGroupManager $groupManager,
-		QuotaManager $quotaManager,
-		UsedSpaceCalculator $usedSpaceCalculator,
+		private readonly IGroupManager $groupManager,
+		private readonly UsedSpaceCalculator $usedSpaceCalculator,
 	) {
 		parent::__construct();
-		$this->groupManager = $groupManager;
-		$this->quotaManager = $quotaManager;
-		$this->usedSpaceCalculator = $usedSpaceCalculator;
 	}
 
 	protected function configure() {

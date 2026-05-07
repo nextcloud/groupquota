@@ -32,19 +32,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Terminal;
 
 class QuotaList extends Base {
-	private $quotaManager;
-	private $usedSpaceCalculator;
-	private $groupManager;
-
 	public function __construct(
-		IGroupManager $groupManager,
-		QuotaManager $quotaManager,
-		UsedSpaceCalculator $usedSpaceCalculator,
+		private readonly IGroupManager $groupManager,
+		private readonly QuotaManager $quotaManager,
+		private readonly UsedSpaceCalculator $usedSpaceCalculator,
 	) {
 		parent::__construct();
-		$this->groupManager = $groupManager;
-		$this->quotaManager = $quotaManager;
-		$this->usedSpaceCalculator = $usedSpaceCalculator;
 	}
 
 	protected function configure() {

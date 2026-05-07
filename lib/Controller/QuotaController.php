@@ -32,21 +32,14 @@ use OCP\IRequest;
 use OCP\Util;
 
 class QuotaController extends OCSController {
-	private QuotaManager $quotaManager;
-	private UsedSpaceCalculator $usedSpaceCalculator;
-	private IGroupManager $groupManager;
-
 	public function __construct(
 		$AppName,
 		IRequest $request,
-		QuotaManager $quotaManager,
-		UsedSpaceCalculator $usedSpaceCalculator,
-		IGroupManager $groupManager,
+		private readonly QuotaManager $quotaManager,
+		private readonly UsedSpaceCalculator $usedSpaceCalculator,
+		private readonly IGroupManager $groupManager,
 	) {
 		parent::__construct($AppName, $request);
-		$this->quotaManager = $quotaManager;
-		$this->usedSpaceCalculator = $usedSpaceCalculator;
-		$this->groupManager = $groupManager;
 	}
 
 	public function setQuota(string $groupId, $quota): DataResponse {

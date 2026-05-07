@@ -28,17 +28,11 @@ use OCP\IGroup;
 use OCP\IUser;
 
 class UsedSpaceCalculator {
-	/** @var IDBConnection */
-	private $connection;
-
-	public function __construct(IDBConnection $connection) {
-		$this->connection = $connection;
+	public function __construct(
+		private readonly IDBConnection $connection,
+	) {
 	}
 
-	/**
-	 * @param IGroup $group
-	 * @return integer
-	 */
 	public function getUsedSpaceByGroup(IGroup $group): int {
 		$users = $group->getUsers();
 		if (count($users) === 0) {
