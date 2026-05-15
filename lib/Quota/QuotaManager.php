@@ -46,12 +46,10 @@ class QuotaManager {
 
 	public function getUserQuota(IUser $user) {
 		$groups = $this->groupManager->getUserGroups($user);
-		$groupQuotas = array_map(function (IGroup $group) {
-			return $this->getGroupQuota($group->getGID());
-		}, $groups);
-		foreach ($groupQuotas as $group => $quota) {
+		foreach ($groups as $group) {
+			$quota = $this->getGroupQuota($group->getGID());
 			if ($quota >= 0) {
-				return [$group, $quota];
+				return [$group->getGID(), $quota];
 			}
 		}
 		return ['', FileInfo::SPACE_UNLIMITED];
