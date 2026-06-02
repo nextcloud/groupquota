@@ -24,7 +24,6 @@ namespace OCA\GroupQuota\Quota;
 
 use OCP\Files\FileInfo;
 use OCP\IConfig;
-use OCP\IGroup;
 use OCP\IGroupManager;
 use OCP\IUser;
 
