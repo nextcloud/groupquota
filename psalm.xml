@@ -21,7 +21,16 @@
 		<directory name="vendor/nextcloud/ocp"/>
 	</extraFiles>
 	<stubs>
-		<file name="tests/stubs/stub.phpstub" preloadClasses="true"/>
+		<file name="tests/stubs/oc_files_filesystem.php" />
+		<file name="tests/stubs/oc_core_command_base.php" />
+		<file name="tests/stubs/oc_files_storage_storage.php" />
+		<file name="tests/stubs/oc_files_storage_home.php" />
+		<file name="tests/stubs/oc_files_storage_wrapper_wrapper.php" />
+		<file name="tests/stubs/oc_files_storage_wrapper_quota.php" />
+		<file name="tests/stubs/oc_files_cache_cache.php" />
+		<file name="tests/stubs/oc_files_cache_wrapper_cachewrapper.php" />
+		<file name="tests/stubs/symfony_component_console_command_command.php" />
+		<file name="tests/stubs/stecman_component_symfony_console_bashcompletion_completion_completionawareinterface.php" />
 	</stubs>
 	<issueHandlers>
 		<UndefinedDocblockClass>

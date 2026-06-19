@@ -26,28 +26,17 @@ use OC\Files\Cache\Wrapper\CacheWrapper;
 use OCP\Files\Cache\ICache;
 
 class GroupUsedSpaceCacheWrapper extends CacheWrapper {
-	/** @var string */
-	private $root;
-
-	/** @var int */
-	private $rootSize;
-
-	/**
-	 * GroupUsedSpaceCacheWrapper constructor.
-	 *
-	 * @param ICache $cache
-	 * @param string $root
-	 * @param int $rootSize
-	 */
-	public function __construct(ICache $cache, string $root, int $rootSize) {
+	public function __construct(
+		ICache $cache,
+		private readonly string $root,
+		private readonly int $rootSize,
+	) {
 		parent::__construct($cache);
-		$this->root = $root;
-		$this->rootSize = $rootSize;
 	}
 
 	public function get($file) {
 		$data = parent::get($file);
-		if ($file === $this->root) {
+		if ($file === $this->root && $data) {
 			$data['size'] = $this->rootSize;
 		}
 		return $data;

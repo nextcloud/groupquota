@@ -32,19 +32,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Terminal;
 
 class QuotaList extends Base {
-	private $quotaManager;
-	private $usedSpaceCalculator;
-	private $groupManager;
-
 	public function __construct(
-		IGroupManager $groupManager,
-		QuotaManager $quotaManager,
-		UsedSpaceCalculator $usedSpaceCalculator,
+		private readonly IGroupManager $groupManager,
+		private readonly QuotaManager $quotaManager,
+		private readonly UsedSpaceCalculator $usedSpaceCalculator,
 	) {
 		parent::__construct();
-		$this->groupManager = $groupManager;
-		$this->quotaManager = $quotaManager;
-		$this->usedSpaceCalculator = $usedSpaceCalculator;
 	}
 
 	protected function configure() {
@@ -75,15 +68,17 @@ class QuotaList extends Base {
 		# content
 		foreach ($quotas as $groupId => $quota) {
 			$group = $this->groupManager->get($groupId);
-			$used = $this->usedSpaceCalculator->getUsedSpaceByGroup($group);
-			$free = $quota - $used;
-			$quotaTxt = $input->getOption('format') ? \OCP\Util::humanFileSize($quota) : $quota;
-			$usedTxt = $input->getOption('format') ? \OCP\Util::humanFileSize($used) : $used;
-			$freeTxt = $input->getOption('format') ? \OCP\Util::humanFileSize($free) : $free;
+			if ($group) {
+				$used = $this->usedSpaceCalculator->getUsedSpaceByGroup($group);
+				$free = $quota - $used;
+				$quotaTxt = $input->getOption('format') ? \OCP\Util::humanFileSize($quota) : $quota;
+				$usedTxt = $input->getOption('format') ? \OCP\Util::humanFileSize($used) : $used;
+				$freeTxt = $input->getOption('format') ? \OCP\Util::humanFileSize($free) : $free;
 
-			$texts = [$groupId, $freeTxt, $usedTxt, $quotaTxt];
-			$text = $this->formatTableRow($texts, $widths);
-			$output->writeln($text);
+				$texts = [$groupId, $freeTxt, $usedTxt, $quotaTxt];
+				$text = $this->formatTableRow($texts, $widths);
+				$output->writeln($text);
+			}
 		}
 		return 0;
 	}

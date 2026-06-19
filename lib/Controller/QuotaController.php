@@ -29,23 +29,17 @@ use OCP\AppFramework\OCS\OCSBadRequestException;
 use OCP\AppFramework\OCSController;
 use OCP\IGroupManager;
 use OCP\IRequest;
+use OCP\Util;
 
 class QuotaController extends OCSController {
-	private QuotaManager $quotaManager;
-	private UsedSpaceCalculator $usedSpaceCalculator;
-	private IGroupManager $groupManager;
-
 	public function __construct(
 		$AppName,
 		IRequest $request,
-		QuotaManager $quotaManager,
-		UsedSpaceCalculator $usedSpaceCalculator,
-		IGroupManager $groupManager,
+		private readonly QuotaManager $quotaManager,
+		private readonly UsedSpaceCalculator $usedSpaceCalculator,
+		private readonly IGroupManager $groupManager,
 	) {
 		parent::__construct($AppName, $request);
-		$this->quotaManager = $quotaManager;
-		$this->usedSpaceCalculator = $usedSpaceCalculator;
-		$this->groupManager = $groupManager;
 	}
 
 	public function setQuota(string $groupId, $quota): DataResponse {
@@ -53,7 +47,7 @@ class QuotaController extends OCSController {
 		if (!$group) {
 			throw new OCSBadRequestException('Group not found: ' . $groupId);
 		}
-		$quotaBytes = \OCP\Util::computerFileSize($quota);
+		$quotaBytes = (int)Util::computerFileSize($quota);
 		if (!$quotaBytes) {
 			throw new OCSBadRequestException('Invalid quota');
 		}
@@ -75,9 +69,9 @@ class QuotaController extends OCSController {
 	private function buildQuotaResponse(int $quotaBytes, int $used): DataResponse {
 		return new DataResponse([
 			'quota_bytes' => $quotaBytes,
-			'quota_human' => \OCP\Util::humanFileSize($quotaBytes),
+			'quota_human' => Util::humanFileSize($quotaBytes),
 			'used_bytes' => $used,
-			'used_human' => \OCP\Util::humanFileSize($used),
+			'used_human' => Util::humanFileSize($used),
 			'used_relative' => round((float)$used / (float)$quotaBytes * 100.0, 2)
 		]);
 	}

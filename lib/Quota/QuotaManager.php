@@ -28,15 +28,10 @@ use OCP\IGroupManager;
 use OCP\IUser;
 
 class QuotaManager {
-	/** @var IConfig */
-	private $config;
-
-	/** @var IGroupManager */
-	private $groupManager;
-
-	public function __construct(IConfig $config, IGroupManager $groupManager) {
-		$this->config = $config;
-		$this->groupManager = $groupManager;
+	public function __construct(
+		private readonly IConfig $config,
+		private readonly IGroupManager $groupManager,
+	) {
 	}
 
 	public function getGroupQuota(string $groupId): int {

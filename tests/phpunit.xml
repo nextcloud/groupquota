@@ -6,6 +6,7 @@
 >
 	<testsuite name='Nextcloud - Groupquota App Tests'>
 		<directory suffix='.php'>.</directory>
+		<exclude>./stubs/</exclude>
 	</testsuite>
 	<filter>
 		<whitelist>
