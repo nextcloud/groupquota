@@ -26,7 +26,6 @@ namespace OCA\groupquota\tests\Quota;
 use OCA\GroupQuota\Quota\QuotaManager;
 use OCP\Files\FileInfo;
 use OCP\IConfig;
-use OCP\IGroup;
 use OCP\IGroupManager;
 use OCP\IUser;
 use Test\TestCase;
@@ -44,22 +43,11 @@ class QuotaManagerTest extends TestCase {
 
 	private function getGroupManager($groups): IGroupManager {
 		$groupManager = $this->createMock(IGroupManager::class);
-		$groupManager->method('getUserGroups')
+		$groupManager->method('getUserGroupIds')
 			->willReturnCallback(function (IUser $user) use ($groups) {
-				$groupIds = isset($groups[$user->getUID()]) ? $groups[$user->getUID()] : [];
-				$groups = array_map(function (string $groupId) {
-					return $this->getGroup($groupId);
-				}, $groupIds);
-				return array_combine($groupIds, $groups);
+				return isset($groups[$user->getUID()]) ? $groups[$user->getUID()] : [];
 			});
 		return $groupManager;
-	}
-
-	private function getGroup(string $groupId): IGroup {
-		$group = $this->createMock(IGroup::class);
-		$group->method('getGID')
-			->willReturn($groupId);
-		return $group;
 	}
 
 	private function getUser(string $userId): IUser {

@@ -39,11 +39,11 @@ class QuotaManager {
 	}
 
 	public function getUserQuota(IUser $user) {
-		$groups = $this->groupManager->getUserGroups($user);
-		foreach ($groups as $group) {
-			$quota = $this->getGroupQuota($group->getGID());
+		$groupIds = $this->groupManager->getUserGroupIds($user);
+		foreach ($groupIds as $groupId) {
+			$quota = $this->getGroupQuota($groupId);
 			if ($quota >= 0) {
-				return [$group->getGID(), $quota];
+				return [$groupId, $quota];
 			}
 		}
 		return ['', FileInfo::SPACE_UNLIMITED];
