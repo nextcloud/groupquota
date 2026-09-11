@@ -12,7 +12,7 @@
 	errorBaseline="psalm-baseline.xml"
 	findUnusedCode="false"
 	ensureOverrideAttribute="false"
-	phpVersion="8.1"
+	phpVersion="8.2"
 >
 	<projectFiles>
 		<directory name="lib"/>
